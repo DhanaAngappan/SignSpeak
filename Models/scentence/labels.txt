@@ -1,0 +1,9 @@
+0 angry
+1 hello
+2 How are you
+3 no
+4 Okay
+5 Please
+6 Thank You
+7 Understand
+8 What is your name
