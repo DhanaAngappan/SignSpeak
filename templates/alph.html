@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Number Recognition</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            min-width: 200px;
+            text-size-adjust: 5px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            background: url("{{ url_for('static', filename='images/bg2.jpg') }}");
+            /* background: url("bg2.jpg") no-repeat; */
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            margin-top: 50px;
+            padding: 20px;
+            margin-bottom: 100px;
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            flex-wrap: wrap; /* Wrap items to next row */
+        }
+
+        .contact-box {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: black;
+            margin-right: 20px; /* Add margin to the right of the contact-box */
+            margin-bottom: 20px; /* Add margin at the bottom of the contact-box */
+        }
+
+        .feedback-box {
+            width: 45%;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: black;
+            margin-left: 20px; /* Add margin to the left of the feedback-box */
+            margin-bottom: 20px; /* Add margin at the bottom of the feedback-box */
+        }
+
+        .contact-box h2,
+        .feedback-box h2 {
+            margin-top: 0;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-top: 25px;
+            height: 0;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .btcontainer
+        {
+          padding: 30px;
+          max-width: fit-content;
+
+
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            width: 200px;
+            background-color: palevioletred;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 15px;
+            width: 100px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: black;
+            color: #fff;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/lesson">Lesson</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-button">Recogniser</a>
+                    <div class="dropdown-content">
+                        <a href="/number">Number Recognition</a>
+                        <a href="/alphabet">Alphabet Recognition</a>
+                        <a href="/words">Word Recognition</a>
+                    </div>
+                </li>
+                
+                <li><a href="/index">Log Out</a></li>
+                <li><a href="/Contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div class="contact-box">
+                <h2>Alphabet Recogniser</h2>
+                <div class="video-container">
+                  <video id="video" width="600" height="440" autoplay></video>
+                </div>
+         
+            </div>
+            <div class="feedback-box">
+                <h2>Text Output</h2>
+                <p>{{output1}}</p>
+            </div>
+            <div class="btcontainer">
+            <button class="btn" id="startButton">Start Recording</button>
+            <button class = "btn"  id="stopButton" disabled>Stop Recording</button>
+          </div>
+        </div>
+    </div>
+    <script>
+    let mediaRecorder;
+    let chunks = [];
+
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const video = document.getElementById('video');
+
+    // Get access to the camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function (stream) {
+        video.srcObject = stream;
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function (event) {
+          chunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = function () {
+          // Convert chunks to Blob
+          const blob = new Blob(chunks, { type: 'video/mp4' });
+
+          // Create FormData object to send file to server
+          const formData = new FormData();
+          formData.append('video', blob, 'video.mp4');
+
+          // Send POST request to Flask server
+          fetch('/video_save', {
+            method: 'POST',
+            body: formData
+          })
+          .then(response => {
+            console.log('Video saved successfully:', response);
+          })
+          .catch(error => {
+            console.error('Error saving video:', error);
+          });
+        };
+      })
+      .catch(function (error) {
+        console.log('Error accessing the camera:', error);
+      });
+
+    // Start recording
+    startButton.addEventListener('click', function () {
+      chunks = [];
+      mediaRecorder.start();
+      startButton.disabled = true;
+      stopButton.disabled = false;
+    });
+
+    // Stop recording
+    stopButton.addEventListener('click', function () {
+      mediaRecorder.stop();
+      startButton.disabled = false;
+      stopButton.disabled = true;
+      reloadPage();
+    });
+    var reloadCount = 0;
+
+
+        function reloadPage() {
+            if (reloadCount < 1) {
+                setTimeout(function() {
+                    window.location.reload(); 
+                    reloadCount++;
+                                   }, 5000);
+            }
+        }
+
+        window.onload = reloadPage;
+    
+  </script>
+</body>
+</html>

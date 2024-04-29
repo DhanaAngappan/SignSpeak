@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+      
+    .dropdown 
+    {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-button
+     {
+        background-color: black;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content 
+    {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 200px;
+        text-size-adjust: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    .dropdown-content a 
+    {
+        color: black;
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:hover 
+    {
+        background-color: black;
+    }
+
+    .dropdown:hover .dropdown-content 
+    {
+        display: block;
+    }
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            margin: 0;
+            padding:0;
+            background: url("{{ url_for('static', filename='images/bg3.jpg') }}");
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover;/* Light gray background */
+        }
+
+        header {
+            height: 20px;
+            background-color: #333;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            display: flex;
+            margin-top: 100px; /* Adjust for header height */
+            padding: 20px;
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+
+        .text-content {
+            flex: 1;
+            width: 400px;
+            padding-right: 10px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 30px;
+        }
+
+        .card {
+            width: 230px;
+            height: 230px;
+            background-color: palevioletred;
+            display: flex;
+            border-radius: 20px;
+            border-width: 10px;
+            border: 1px solid black;
+            border-color: #fff;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .card:hover {
+            background-color: black; /* Lighter shade */
+            cursor: pointer;
+        }
+        p{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/lesson">Lesson</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-button">Recogniser</a>
+                    <div class="dropdown-content">
+                        <a href="/number">Number Recognition</a>
+                        <a href="/alphabet">Alphabet Recognition</a>
+                        <a href="/words">Word Recognition</a>
+                    </div>
+                </li>
+                
+                <li><a href="/index">Log Out</a></li>
+                <li><a href="/Contact">Contact</a></li>
+            </ul>
+        </div>
+        
+    </header>
+    <div class="content">
+        <div class="text-content">
+            <h1><i>Welcome</i></h1>
+            <p>Welcome to our inclusive platform dedicated to empowering <br>speech-impaired individuals.
+                Discover a supportive community, <br>innovative tools, and tailored resources designed to enhance<br>
+                communication  and foster connections. Break barriers, find your voice,  <br>and embracea world of limitless
+                possibilities. Join us on a journey of <br>inclusivity and empowerment.
+            </p>
+        </div>
+        <div class="cards">
+            <div class="card">Alphabet and Number <br>recogniser</div>
+            <div class="card">Words recogniser</div>
+            <div class="card">Lessons and Guide</div>
+            <div class="card">Games</div>
+        </div>
+    </div>
+</body>
+</html>

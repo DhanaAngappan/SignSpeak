@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guide Page</title>
+    <style>
+        body {
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fce5e5;
+        }
+
+        .guide-container {
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            margin: 0 auto; /* Center-align the container */
+            color:brown
+        }
+
+        .guide-box {
+            border: 2px solid brown;
+            width: 45%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #fce5e5;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            color:brown
+        }
+
+        .guide-box:first-child {
+            margin-right: 20px; /* Add margin between the first and second boxes */
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .gesture-img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        /* Remove border around .guide-container */
+        .guide-container {
+            border: none;
+        }
+        .navbar {
+            background-color: brown;
+            color: #fff;
+            font-size: large;
+            font-weight: bold;
+            padding: 20px;
+            margin-bottom:50px; /* Pushes content to the bottom */
+            display: flex;
+            justify-content: flex-end; /* Align items to the right */
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; /* Remove default margin */
+            display: flex;
+            gap: 20px; /* Add space between items */
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            padding: 20px;
+            margin-bottom: 200px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/guide">Guide</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <div class="guide-box">
+            <h2>Numbers</h2>
+            <img src="https://www.researchgate.net/publication/367524557/figure/fig3/AS:11431281115612767@1675008990654/Signs-representing-Numbers-from-1-10.jpg" alt="ISL Numbers Gesture Signs" class="gesture-img">
+            <!-- Add more images for numbers from 0-20 -->
+        </div>
+        <div class="guide-box">
+            <h3>Alphabets</h3>
+            <img src="https://islrtc.nic.in/sites/default/files/PosterAlphabetsISLRTC.jpg" alt="ISL Alphabets Gesture Signs" class="gesture-img">
+            <!-- Add more images for alphabets A-Z -->
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Register Page</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/bg2.jpg') }}") no-repeat;
+            position: relative;
+            background-size: cover;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .content {
+            padding: 20px;
+            margin-bottom: 200px;
+            text-align: center;
+        }
+        .register-box {
+            width: 300px;
+            margin: 0 auto;
+            padding: 15px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: black;
+        }
+        .register-box label {
+            font-weight: normal;
+        }
+        .register-box input[type="text"],
+        .register-box input[type="email"],
+        .register-box input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .register-box input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: black;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .register-box input[type="submit"]:hover {
+            background-color: palevioletred;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            background-color: white;
+            color: #fff;
+            text-decoration: none;
+            width: 100px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .click {
+            margin-top: 50px;
+        }
+        .btn:hover {
+            background-color: palevioletred;
+            color: #fff;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h3>Register</h3>
+            <div class="register-box">
+                <form method="POST" action="{{ url_for('register') }}" id="registerForm">
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name"><br><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="registerEmail" name="email"><br><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="registerPassword" name="password"><br><br>
+                    <label for="confirm_password">Confirm Password:</label><br>
+                    <input type="password" id="confirm_password" name="confirm_password"><br><br>
+                    <input type="submit" value="Register" class="btn" id="register">
+                </form>
+            </div>
+            <p>Already have an account? <a href="/login">Login</a></p>
+        </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDhled4Wj0pjfxp3FnODE9elxK6hgOqxQ",
+            authDomain: "projectdhh-81b8f.firebaseapp.com",
+            databaseURL: "https://projectdhh-81b8f-default-rtdb.firebaseio.com",
+            projectId: "projectdhh-81b8f",
+            storageBucket: "projectdhh-81b8f.appspot.com",
+            messagingSenderId: "211653081562",
+            appId: "1:211653081562:web:39d4291b114f0b3b6728e3"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+    
+        // Adding event listener for form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('registerEmail').value;
+            var password = document.getElementById('registerPassword').value;
+            var confirm_password = document.getElementById('confirm_password').value;
+    
+            // Check if passwords match
+            if (password !== confirm_password) {
+                alert('Passwords do not match!');
+                return;
+            }
+    
+            // Create user with email and password
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                set(ref(database, 'users/' + user.uid), {
+                    name: name,
+                    email: email
+                });
+    
+                alert('User created!');
+                window.location.href = "/login";
+            })
+            .catch((error) => {
+                // Handle errors
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+        });
+    </script>
+</body>
+</html>

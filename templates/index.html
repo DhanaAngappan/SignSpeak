@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>index</title>
+    <style>
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            margin: 0;
+            padding: 0;
+            background: url("{{ url_for('static', filename='images/bg1.jpg') }}");
+            /*background: url("bg1.jpg") no-repeat;*/
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column; 
+        }
+
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            padding: 50px;
+            margin-bottom: 180px;
+            margin-left: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            text-align: center;
+            background-color: blue;
+            color: #fff;
+            text-decoration: none;
+            width: 100px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .click {
+            margin-top: 50px;
+        }
+
+        .btn:hover {
+            background-color: black;
+            color: #fff;
+            border-color: white;
+        }
+        h1
+        {
+            font-size: 30px;
+        }
+        p{
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <p> <i>Get Started with,</i><br>
+                HAR Based Assistive<br>
+                Technology for<br>
+                Speech Impaired Children.
+            </p>
+            <div class="click">
+                <a href="/login" class="btn">Get Started</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

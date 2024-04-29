@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Contact</title>
+    <style>
+        .dropdown 
+    {
+        position: relative;
+        display: inline-block;
+    }
+
+
+    .dropdown-button
+     {
+        background-color: black;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content 
+    {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 200px;
+        text-size-adjust: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    .dropdown-content a 
+    {
+        color: black;
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:hover 
+    {
+        background-color: black;
+    }
+
+    .dropdown:hover .dropdown-content 
+    {
+        display: block;
+    }
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            background: url("{{ url_for('static', filename='images/bg3.jpg') }}");
+            /* background: url("bg3.jpg") no-repeat;  */
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+         .content {
+            margin-bottom: 100px;
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            align-items: center; /* Center items vertically */
+            flex-wrap: wrap; /* Wrap items to next row */
+        }
+
+        .box {
+            width: 35%; /* Adjust width for two boxes in a row */
+            padding: 15px;
+            border: 1px;
+            border-radius: 10px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            margin: 10px; /* Adjust margin for spacing between boxes */
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/lesson">Lesson</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-button">Recogniser</a>
+                    <div class="dropdown-content">
+                        <a href="/number">Number Recognition</a>
+                        <a href="/alphabet">Alphabet Recognition</a>
+                        <a href="/words">Word Recognition</a>
+                    </div>
+                </li>
+                <li><a href="/Play">Play</a></li>
+                <li><a href="/index">Log Out</a></li>
+                <li><a href="/Contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div class="box">
+                <h2>1. Who are we</h2>
+                <p>
+                    <br><i>We are a dedicated team passionate about accessibility and inclusion for speech-impaired individuals.</i></br>
+                </p>
+            </div>
+            <div class="box">
+                <h2>2. What we do</h2>
+                <p>
+                    <br><i>Our mission is to provide innovative communication solutions tailored to the unique needs of speech-impaired individuals.</i></br>
+                </p>
+            </div>
+            <div class="box">
+                <h2>3. How we help you</h2>
+                <p>
+                    <br><i>We empower speech-impaired individuals by offering cutting-edge technologies and personalized support.</i></br>
+                </p>
+            </div>
+            <div class="box">
+                <h2>4. Future services</h2>
+                <p>
+                    <br><i>Stay tuned for exciting upcoming services designed to further enhance communication and accessibility for our community.</i></br>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

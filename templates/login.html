@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login Page</title>
+    <style>
+        .dropdown 
+    {
+        position: relative;
+        display: inline-block;
+    }
+
+
+    .dropdown-button
+     {
+        background-color: black;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content 
+    {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 200px;
+        text-size-adjust: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+    .dropdown-content a 
+    {
+        color: black;
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+    }
+    .dropdown-content a:hover 
+    {
+        background-color: black;
+    }
+
+    .dropdown:hover .dropdown-content 
+    {
+        display: block;
+    }
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            background: url("{{ url_for('static', filename='images/bg2.jpg') }}") no-repeat;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover; /* Light gray background */
+        }
+
+        .container {
+            margin-top: 100px;
+            display: flex;
+            height: 100vh;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            padding: 20px;
+            margin-bottom: 200px;
+            text-align: center;
+        }
+
+        .login-box {
+            width: 300px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: black;
+            border-color: #fff;
+        }
+
+        .login-box label {
+            font-weight: normal;
+        }
+
+        .login-box input[type="email"],
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .login-box input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: blue;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-box input[type="submit"]:hover {
+            background-color: palevioletred; /* Darker shade of brown */
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 50px 20px;
+            text-align: center;
+            background-color: blue;
+            color: #fff;
+            text-decoration: none;
+            width: 100px;
+            border-radius: 25px;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: palevioletred;
+            color: #fff;
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="navbar">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/Lesson">Lesson</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-button">Recogniser</a>
+                    <div class="dropdown-content">
+                        <a href="#">Number Recognition</a>
+                        <a href="#">Alphabet Recognition</a>
+                        <a href="#">Word Recognition</a>
+                    </div>
+                </li>
+                <li><a href="/Play">Play</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div> -->
+
+        <div class="content">
+            <h1>Login</h1>
+            <div class="login-box">
+                <form id="loginForm">
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email"><br><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password"><br><br>
+                    <input type="submit" value="Login" class="btn">
+                </form>
+            </div>
+            <p>New user? <a href="/register">Register</a></p>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, set, ref, update} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, signInWithEmailAndPassword ,onAuthStateChanged , signOut} from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+
+    
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCDhled4Wj0pjfxp3FnODE9elxK6hgOqxQ",
+          authDomain: "projectdhh-81b8f.firebaseapp.com",
+          databaseURL: "https://projectdhh-81b8f-default-rtdb.firebaseio.com",
+          projectId: "projectdhh-81b8f",
+          storageBucket: "projectdhh-81b8f.appspot.com",
+          messagingSenderId: "211653081562",
+          appId: "1:211653081562:web:39d4291b114f0b3b6728e3"
+        };
+      
+        // Initialize Firebase
+      
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+    
+        // Adding event listener for form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent form submission
+           
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+           
+           
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                const dt = new Date();
+                update(ref(database, 'users/' + user.uid), {
+                last_login:dt,
+               
+            });
+                alert('User logged in!');
+                window.location.href = "/home"; // Redirect to home page after successful login
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            });
+        });
+        const user = auth.currentUser;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const uid = user.uid;
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+        logout.addEventListener('click', (e) => {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+                alert('User logged out');
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+                // An error happened.
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Lesson</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: black;
+            min-width: 200px;
+            text-size-adjust: 5px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-size: medium;
+            color: white;
+            background: url("{{ url_for('static', filename='images/bg2.jpg') }}");
+            /* background: url("bg2.jpg"); */
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .navbar {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: auto; 
+            display: flex;
+            text-align: center;
+            justify-content: flex-end; 
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0; 
+            display: flex;
+            gap: 50px; 
+            margin-right: 50px;
+        }
+
+        .navbar li {
+            display: inline-block;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .content {
+            margin-top: 10px;
+            padding: 20px;
+            margin-bottom: 100px;
+            display: flex;
+            justify-content: center; /* Center items horizontally */
+            flex-wrap: wrap; /* Wrap items to next row */
+        }
+
+        .contact-box {
+            width: 45%;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: black;
+            margin-right: 20px; /* Add margin to the right of the contact-box */
+            margin-bottom: 20px; /* Add margin at the bottom of the contact-box */
+        }
+
+        .feedback-box {
+            width: 45%;
+            padding: 10px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: black;
+            margin-left: 20px; /* Add margin to the left of the feedback-box */
+            margin-bottom: 20px; /* Add margin at the bottom of the feedback-box */
+        }
+
+        .contact-box h2,
+        .feedback-box h2 {
+            margin-top: 0;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-top: 25px;
+            height: 0;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .section {
+            min-height: calc(100vh - 20px); /* Adjusted for header height */
+            overflow-y: auto; /* Enable vertical scrolling */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center; /* Center the content vertically */
+            text-align: center;
+            margin-bottom: 50px; /* Add margin to the bottom of each section */
+            padding-top: 40px;
+            padding: 20px; /* Adjust for header height */
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20PX;
+            justify-content: space-between;
+            max-width: 1150px; /* Adjust the max-width to fit 5 cards per row */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+
+
+        .card {
+            width: calc(20% - 20px); /* Set the width to 20% of the container width with some margin */
+            height: 230px; /* Set height to 230 pixels */
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .cardalpA {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/A.jpg') }}");
+        /* background-image: url("A.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpB {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/B.jpg') }}");
+        /* background-image: url("B.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpC {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/C.jpg') }}");
+        /* background-image: url("C.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpD {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/D.jpg') }}");
+        /* background-image: url("D.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpE {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image:url("{{ url_for('static', filename='images/E.jpg') }}");
+        /* background-image: url("E.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpF {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/F.jpg') }}");
+        /* background-image: url("F.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpG {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/G.jpg') }}");
+        /* background-image: url("G.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpH {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/H.jpg') }}");
+        /* background-image: url("H.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpI {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image:url("{{ url_for('static', filename='images/I.jpg') }}");
+        /* background-image: url("I.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpJ {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/J.jpg') }}");
+        /* background-image: url("J.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpK {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/K.jpg') }}");
+        /* background-image: url("K.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpL {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/L.jpg') }}");
+        /* background-image: url("L.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpM {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/M.jpg') }}");
+        /* background-image: url("M.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpN {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/N.jpg') }}");
+        /* background-image: url("N.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpO {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/O.jpg') }}");
+        /* background-image: url("O.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpP {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/P.jpg') }}");
+        /* background-image: url("P.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpQ {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/Q.jpg') }}");
+        /* background-image: url("Q.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpR {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        
+        background-image: url("{{ url_for('static', filename='images/R.jpg') }}");
+        /* background-image: url("R.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpS {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/S.jpg') }}");
+        /* background-image: url("S.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpT {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/T.jpg') }}");
+        /* background-image: url("T.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpU {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/U.jpg') }}");;
+        /* background-image: url("U.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpV {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/V.jpg') }}");
+        /* background-image: url("V.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpW {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/W.jpg') }}");
+        /* background-image: url("W.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpX {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image:url("{{ url_for('static', filename='images/X.jpg') }}");
+        /* background-image: url("X.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpY {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image:url("{{ url_for('static', filename='images/Y.jpg') }}");
+        /* background-image: url("Y.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardalpZ {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image:url("{{ url_for('static', filename='images/Z.jpg') }}");
+        /* background-image: url("Z.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+
+
+        .cardnum {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+         background-image: url("{{ url_for('static', filename='images/0.jpg') }}");    
+/*         background-image: url("0.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        position: relative;
+        cursor: pointer;
+        overflow: hidden;        
+        } 
+        .cardnum1 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/1.jpg') }}");
+/*         background-image: url("1.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }
+        .cardnum2 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/2.jpg') }}");
+/*         background-image: url("2.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }
+        .cardnum3 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/3.jpg') }}");
+/*         background-image: url("3.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }
+        .cardnum4 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+         background-image: url("{{ url_for('static', filename='images/4.jpg') }}");
+/*         background-image: url("4.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }
+        .cardnum5 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/5.jpg') }}");
+/*         background-image: url("5.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }
+        .cardnum6 {
+        width: 220px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/6.jpg') }}");
+/*         background-image: url("6.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }  
+        .cardnum7 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/7.jpg') }}");
+/*         background-image: url("7.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        } 
+        .cardnum8 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/8.jpg') }}");
+/*         background-image: url("8.jpg"); */
+        background-size: contain; /* Ensure the image fits fully within the box */
+        background-position: center; /* Center the background image */
+        border-radius: 10px;
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; /* Use inline-block to allow elements to be displayed in a row */
+        }   
+        .cardnum9 {
+        width: 230px; /* Set the width to 230 pixels */
+        height: 230px; /* Set height to 230 pixels */
+        margin-bottom: 20px;
+        background-color: #000;
+        background-repeat: repeat-y;
+        background-image: url("{{ url_for('static', filename='images/9.jpg') }}");
+/*         background-image: url("9.jpg"); */
+        background-size: contain; 
+        background-position: center; 
+        padding: 0px;
+        box-sizing: border-box;
+        text-align: center;
+        display: inline-block; 
+        }  
+     
+
+        .section_numbers{
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+
+
+        @media (max-width: 1200px) {
+            .card {
+                width: calc(25% - 20px); 
+            }
+        }
+
+        @media (max-width: 992px) {
+            .card {
+                width: calc(33.33% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: calc(50% - 20px); 
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                width: calc(100% - 20px); 
+            }
+        }
+        
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/lesson">Lesson</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-button">Recogniser</a>
+                    <div class="dropdown-content">
+                        <a href="/number">Number Recognition</a>
+                        <a href="/alphabet">Alphabet Recognition</a>
+                        <a href="/words">Word Recognition</a>
+                    </div>
+                </li>
+                <li><a href="/index">Log Out</a></li>
+                <li><a href="/Contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <div class="section_numbers">
+                <h2>Numbers</h2>
+                <div class="cards">
+                    <div class="cardnum">Sign-0</div>
+                    <div class="cardnum1">Sign-1</div>
+                    <div class="cardnum2">Sign-2</div>
+                    <div class="cardnum3">Sign-3</div>
+                    <div class="cardnum4">Sign-4</div>
+                    <div class="cardnum5">Sign-5</div>
+                    <div class="cardnum6">Sign-6</div>
+                    <div class="cardnum7">Sign-7</div>
+                    <div class="cardnum8">Sign-8</div>
+                    <div class="cardnum9">Sign-9</div>
+                </div>
+            </div>
+    
+            <div class="section alphabets">
+                <h2>Alphabets</h2>
+                <div class="cards">
+                    <div class="cardalpA">Sign-A</div>
+                    <div class="cardalpB">Sign-B</div>
+                    <div class="cardalpC">Sign-C</div>
+                    <div class="cardalpD">Sign-D</div>
+                    <div class="cardalpE">Sign-E</div>
+                    <div class="cardalpF">Sign-F</div>
+                    <div class="cardalpG">Sign-G</div>
+                    <div class="cardalpH">Sign-H</div>
+                    <div class="cardalpI">Sign-I</div>
+                    <div class="cardalpJ">Sign-J</div>
+                    <div class="cardalpK">Sign-K</div>
+                    <div class="cardalpL">Sign-L</div>
+                    <div class="cardalpM">Sign-M</div>
+                    <div class="cardalpN">Sign-N</div>
+                    <div class="cardalpO">Sign-O</div>
+                    <div class="cardalpP">Sign-P</div>
+                    <div class="cardalpQ">Sign-Q</div>
+                    <div class="cardalpR">Sign-R</div>
+                    <div class="cardalpS">Sign-S</div>
+                    <div class="cardalpT">Sign-T</div>
+                    <div class="cardalpU">Sign-U</div>
+                    <div class="cardalpV">Sign-V</div>
+                    <div class="cardalpW">Sign-W</div>
+                    <div class="cardalpX">Sign-X</div>
+                    <div class="cardalpY">Sign-Y</div>
+                    <div class="cardalpZ">Sign-Z</div>
+                </div>
+            </div>
+            
+        
+        
+        </div>
+    
+
+
+</body>
+</html>
